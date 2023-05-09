@@ -1,6 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const { mongoose } = require('mongoose');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import authRouters from './routers/authRouters.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -15,6 +16,9 @@ mongoose
 
 app.use(express.json());
 app.use(cors());
+
+app.use(authRouters);
+
 app.listen(PORT, (err) => {
   if (err) {
     console.log(err);
