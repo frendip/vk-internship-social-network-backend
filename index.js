@@ -13,6 +13,8 @@ mongoose
   .then(() => console.log('Successful connection to the database.'))
   .catch((err) => console.log('Failed connection to the database ->', err));
 
+app.use(express.json());
+app.use(cors());
 app.listen(PORT, (err) => {
   if (err) {
     console.log(err);
