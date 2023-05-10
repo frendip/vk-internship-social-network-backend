@@ -4,7 +4,7 @@ import cors from 'cors';
 import authRouters from './routers/authRouters.js';
 import userRouters from './routers/userRouters.js';
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 const app = express();
 
