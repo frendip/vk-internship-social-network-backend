@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import authRouters from './routers/authRouters.js';
+import userRouters from './routers/userRouters.js';
 
 const PORT = process.env.PORT || 3001;
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(authRouters);
+app.use(userRouters);
 
 app.listen(PORT, (err) => {
   if (err) {
