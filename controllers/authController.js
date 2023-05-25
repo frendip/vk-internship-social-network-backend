@@ -33,7 +33,7 @@ class AuthController {
         },
         secretKey.key,
         {
-          expiresIn: '7d',
+          expiresIn: '1h',
         },
       );
 
@@ -72,7 +72,7 @@ class AuthController {
         },
         secretKey.key,
         {
-          expiresIn: '7d',
+          expiresIn: '1h',
         },
       );
 

@@ -6,5 +6,6 @@ const controller = new UserController();
 const router = new Router();
 
 router.get('/getMe', checkAuth, controller.getMe);
+router.patch('/updateMe', checkAuth, controller.updateMe);
 
 export default router;
