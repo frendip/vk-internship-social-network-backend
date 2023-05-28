@@ -1,11 +1,11 @@
 import Router from 'express';
-import { checkAuth } from '../utils/checkAuth.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 import UserController from '../controllers/userController.js';
 
 const controller = new UserController();
 const router = new Router();
 
-router.get('/getMe', checkAuth, controller.getMe);
-router.patch('/updateMe', checkAuth, controller.updateMe);
+router.get('/getMe', authMiddleware, controller.getMe);
+router.patch('/updateMe', authMiddleware, controller.updateMe);
 
 export default router;

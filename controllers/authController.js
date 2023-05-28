@@ -7,10 +7,17 @@ import secretKey from '../config.js';
 class AuthController {
   async registration(req, res) {
     try {
-      const candidate = await UserModel.findOne({ email: req.body.email });
-      if (candidate) {
+      const candidateEmail = await UserModel.findOne({ email: req.body.email });
+      if (candidateEmail) {
         return res.status(403).json({
-          message: 'Данный email уже зарегистрирован.',
+          message: 'Данная почта уже зарегистрирован.',
+        });
+      }
+
+      const candidateLogin = await UserModel.findOne({ login: req.body.login });
+      if (candidateLogin) {
+        return res.status(403).json({
+          message: 'Данный логин уже зарегистрирован.',
         });
       }
 
@@ -19,6 +26,7 @@ class AuthController {
       const passwordHash = await bcrypt.hash(password, salt);
 
       const doc = new UserModel({
+        login: req.body.login,
         email: req.body.email,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -43,18 +51,26 @@ class AuthController {
     } catch (err) {
       console.log(err);
       res.status(500).json({
-        messageError: 'Не удалось зарегистрироваться.',
+        message: 'Не удалось зарегистрироваться.',
       });
     }
   }
 
   async login(req, res) {
     try {
-      const user = await UserModel.findOne({ email: req.body.email });
+      const re =
+        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
+      let user;
+      if (re.test(req.body.login)) {
+        user = await UserModel.findOne({ email: req.body.login });
+      } else {
+        user = await UserModel.findOne({ login: req.body.login });
+      }
 
       if (!user) {
         return res.status(403).json({
-          message: 'Неверный логин или пароль',
+          message: 'Неверный логин/почта или пароль',
         });
       }
 
@@ -62,7 +78,7 @@ class AuthController {
 
       if (!isValidPass) {
         return res.status(403).json({
-          message: 'Неверный логин или пароль',
+          message: 'Неверный логин/почта или пароль',
         });
       }
 

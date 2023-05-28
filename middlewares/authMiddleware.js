@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import secretKey from '../config.js';
 
-export const checkAuth = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
   const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
   if (token) {
